@@ -1,23 +1,19 @@
 {
-  "name": "google-search-scraper",
-  "version": "0.0.3",
-  "description": "Google search scraper with captcha solving support",
-  "author": "thibauts",
+  "name": "nik-sherdog",
+  "version": "0.0.1",
+  "description": "Sherdog stats",
+  "author": "niklasHagner",
   "license": "MIT",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "cheerio": "~0.13.1",
+    "express": "^4.15.2",
+    "google-search-scraper": "0.0.3",
     "request": "~2.33.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/thibauts/node-google-search-scraper.git"
+    "url": ""
   },
-  "keywords": [
-    "google",
-    "search",
-    "scraper",
-    "decaptcher",
-    "captcha"
-  ]
+  "keywords": []
 }
