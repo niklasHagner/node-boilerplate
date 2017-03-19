@@ -9,6 +9,8 @@ var cheerio = require("cheerio");
 
 module.exports.getFighter = function (url, callback) {
     request(url, function (error, response, html) {
+        if (error)
+            console.error("ufc-scraper-lib ERROR", error);
         if (!error && response.statusCode == 200) {
             var $ = cheerio.load(html);
 

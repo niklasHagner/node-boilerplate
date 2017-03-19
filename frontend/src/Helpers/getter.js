@@ -2,18 +2,20 @@ import $ from 'jquery';
 
 
 var getFeeds = function (reactRoot, name) {
-    // var urls = getListOfUrls();
-    // var promiseArr = [];
-    // urls.forEach((x, index) => {
-    //     var promise = getSingleFeed(x.url, x.color);
-    //     promiseArr.push(promise);
-    // });
-    // Promise.all(promiseArr).then((values) => {
-    //     var reactResult = { articles: values };
-    //     reactRoot.setState(reactResult);
-    // }).catch(function (e) {
-    //     console.error(e);
-    // });
+    var reactResult = {
+        articles: []
+    };
+    $.get(`http://localhost:8081/Search?name=${name}`, (result) => {
+        if (result.error) {
+            console.error("Feed error");
+            return;
+        }
+        result.forEach((x) => reactResult.articles.push(x));
+        reactRoot.setState(reactResult);
+    });
+};
+
+var getOneGuyAndThenHisOpponents = function (reactRoot, name) {
     var reactResult = {
         articles: []
     };
