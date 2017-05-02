@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var sherdog = require('./backend/getFighter.js');
+var getRequest = require('./getRequest.js');
 var winston = require('winston');
 
 console.log("Launching");
@@ -12,9 +12,9 @@ winston.configure({
 })
 
 var settings = {
-    logOutputOnce: true,
+    logOutputOnce: false,
     loggedResponses: 0,
-    caching: false,
+    caching: true,
     storedResponses: {}, //keymap
 }
 
@@ -24,17 +24,17 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/Search', function (req, response) {
+app.get('/', function (req, response) {
     response.contentType('application/json');
     var defaultResponse = {
         error: true
     };
-
-    if (typeof req.query.name === 'undefined') {
-        console.error(" Error. Try something like this instead: /Search?name=Fedor");
+    if (typeof req.query.encodedUri === 'undefined') {
+        console.error(" Error. Try something like this instead: localhost:someport/?encodedUri=https%3A%2F%2Fjsonplaceholder.typicode.com");
         response.send(defaultResponse);
         return;
     }
+
     console.log('API called with query:', req.query);
     if (settings.caching) {
         var cachedResponse = getStoredResponse(req.query);
@@ -44,12 +44,9 @@ app.get('/Search', function (req, response) {
             return;
         }
     }
+    var decoded = decodeURIComponent(req.query.encodedUri);
 
-    var fighterName = decodeURIComponent(req.query.name);
-    console.log("calling mma.fighter", fighterName);
-
-    //sherdog.getFighter(fighterName).then(function (data) {
-    sherdog.getFromEvent().then(function (data) {
+    getRequest.getFromUrl(decoded).then(function (data) {
         console.log("response:", data);
         if (settings.logOutputOnce && settings.loggedResponses <= 0) {
             winston.log('info', data);
@@ -74,6 +71,7 @@ function storeResponse(key, value) {
     console.log("storing", key);
     settings.storedResponses[key] = value;
 }
+
 function getStoredResponse(key) {
     return settings.storedResponses[key];
 }
@@ -81,5 +79,4 @@ function getStoredResponse(key) {
 var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
-console.info("Endpoint example: /Search?name=Fedor");
-console.info("to launch the frontend goto /frontend and run 'npm start' ");
+console.info("Example call: localhost://" + port + "?/encodedUri=https%3A%2F%2Fjsonplaceholder.typicode.com");

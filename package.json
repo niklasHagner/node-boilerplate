@@ -1,14 +1,12 @@
 {
-  "name": "nik-sherdog",
+  "name": "node-boilerplate",
   "version": "0.0.1",
-  "description": "Sherdog stats",
+  "description": "Simple example of get-request with node",
   "author": "niklasHagner",
   "license": "MIT",
   "main": "app.js",
   "dependencies": {
-    "cheerio": "^0.13.1",
     "express": "^4.15.2",
-    "google-search-scraper": "0.0.3",
     "request": "^2.33.0",
     "winston": "^2.3.1"
   },
