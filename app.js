@@ -50,8 +50,10 @@ app.get('/', function (req, response) {
         console.log("response:", data);
         if (settings.logOutputOnce && settings.loggedResponses <= 0) {
             winston.log('info', data);
-            storeResponse(req.query, data);
             settings.loggedResponses++;
+        }
+        if (settings.caching === true) {
+            storeResponse(req.query, data);
         }
         response.send(data);
         return;
