@@ -1,15 +1,18 @@
-sherdog-nik
+Simple node server
 =============
-### Sherdog
+Just something to start from when you need a simple server to make GET-requests or whatever
 
 1. start the node server
 `node app.js`
 
-2. start the react-frontend
-```bash
-cd /frontend
-npm start
-```
-that's right - the command is `npm`
+2. Test using something like `localhost:8081?encodedUri=https%3A%2F%2Fjsonplaceholder.typicode.com%2Fposts%2F1`
 
-3. browse to `localhost:8081`
+3. Call the server in your clientside javascript like this
+```
+
+var request = 'https://jsonplaceholder.typicode.com/posts/1';
+var url= 'localhost:8081?encodedUri=' + encodeUriComponent(url);
+$.get(url, function(data) {
+  alert(data);
+})
+```
